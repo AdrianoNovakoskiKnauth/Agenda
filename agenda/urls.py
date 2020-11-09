@@ -25,6 +25,7 @@ urlpatterns = [
     path('agenda/evento/', views.evento),
     path('agenda/evento/submit', views.submit_evento),
     path('agenda/evento/deleta/<int:id_evento>/', views.deleta_evento),     #<int:id_evento> = retorna valor a ser deletado
+
     path('login/', views.login_user),
     path('login/submit', views.submit_login),
     path('logout/', views.logout_user),

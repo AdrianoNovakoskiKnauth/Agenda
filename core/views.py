@@ -4,6 +4,7 @@ from core.models import Evento
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from datetime import datetime, timedelta
 
 def login_user(request):
     return render(request, 'login.html')
@@ -27,7 +28,11 @@ def submit_login(request):
 @login_required(login_url='/login/')
 def lista_eventos(request):
     usuario = request.user
-    evento = Evento.objects.filter(usuario=usuario)                    #get(id=1) mostra aoenas 1 item da agenda
+    data_atual = datetime.now() - timedelta(hours=1)
+    evento = Evento.objects.filter(usuario=usuario,
+                                   data_evento__gt=data_atual)                    #get(id=1) mostra aoenas 1 item da agenda
+
+
     dados = {'eventos':evento}
     return render(request, 'agenda.html', dados)
 
@@ -50,9 +55,10 @@ def submit_evento(request):
         if id_evento:
             evento = Evento.objects.get(id=id_evento)
             if usuario == usuario:
+                print('Passou no IF 3')
                 Evento.objects.filter(id=id_evento).update(titulo=titulo,
                                                           data_evento=data_evento,
-                                                           descricao=descricao)
+                                                          descricao=descricao)
         else:
             Evento.objects.create(titulo=titulo,
                                   data_evento=data_evento,

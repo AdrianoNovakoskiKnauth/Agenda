@@ -4,16 +4,21 @@
 <div align="center">
     <h2> Agendamentos</h2>
     <a href="evento/">
-            <button type="button">Novo evento</button>
+        <button type="button"><b>Novo evento</b></button>
     </a>
     <ul style="font-size: 18px" >
     {% for evento in eventos %}
         <tt><li>
-            {{ evento.titulo }} - {{ evento.get_data_evento }} <br> <!--{{ evento.descricao }}<br>-->
+            <div style={% if evento.get_evento_atrasado %}
+                        "color:red"
+                        {% endif %}>
+                {{ evento.titulo }} - {{ evento.get_data_evento }} <br> <!--{{ evento.descricao }}<br>-->
+            </div>
             (<a href="evento/?id={{ evento.id }}">Editar</a>
            / <a href="evento/deleta/{{evento.id}}/">Excluir</a>)<br><br>
         </li>
     {% endfor %}
     </ul>
 </div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}
